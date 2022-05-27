@@ -6,6 +6,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.uix.popup import Popup
+from kivy.config import Config
 
 from Route import Route
 from Route_Container import Route_Container
@@ -13,13 +14,16 @@ from fileReader import All_Routes
 
 Start_Route_Names = All_Routes.getStartLocations()
 End_Route_Names = All_Routes.getEndLocations()
-for x in range(0, 2):
+
+for x in range(0, 3):
 	Start_Route_Names.append("x")
 
-for x in range(0, 4):
+for x in range(0, 3):
 	End_Route_Names.append("x")
 print(Start_Route_Names)
 
+fontSize_Labels = 14
+fontSize_Buttons = 35
 
 def keep_above_zero(number):
 	""" Returns 0 if the number is below 0. Otherwise, returns the number. """
@@ -46,23 +50,23 @@ class MyGrid(GridLayout):
 		dropDown = DropDown()
 		fontSize = 15
 		for item in data:
-			button = Button(text=item, size_hint=(None, None), height=50, width=100, font_size = fontSize)
+			button = Button(text=item, size_hint_y=None, font_size = fontSize, height = 45)
 			button.bind(on_release=lambda button: dropDown.select(button.text))
 			button.bind(on_release=handler)
 			dropDown.add_widget(button)
-		mainButton = Button(text=main_button_text, width=100, size_hint=(None, None), font_size = fontSize)
+		mainButton = Button(text=main_button_text, width=100, font_size = fontSize)
 		mainButton.bind(on_release = dropDown.open)
 		dropDown.bind(on_select=lambda instance, x: setattr(mainButton, 'text', x))
 		return mainButton
 
 	def Create_Adults_RT_Grid(self, mainGrid):
-		mainGrid.add_widget(Label(text="Adults Round Trip: ")) # Add a text label
+		mainGrid.add_widget(Label(text="Adults RT: ", font_size=fontSize_Labels)) # Add a text label
 
-		self.Adults_RT_input = TextInput(text = "0", multiline = False, font_size=40) # Create a text input box
+		self.Adults_RT_input = TextInput(text = "0", multiline = False, font_size=fontSize_Buttons) # Create a text input box
 		self.Adults_RT_input.bind(on_text_validate=self.Adults_RT_Button_Inputs)
-		self.Adults_RT_minus = Button(text="-", font_size=40) # Create a button
+		self.Adults_RT_minus = Button(text="-", font_size=fontSize_Buttons) # Create a button
 		self.Adults_RT_minus.bind(on_press=self.Adults_RT_Button_Inputs) # Bind the button
-		self.Adults_RT_add = Button(text="+", font_size=40) # Create a button
+		self.Adults_RT_add = Button(text="+", font_size=fontSize_Buttons) # Create a button
 		self.Adults_RT_add.bind(on_press=self.Adults_RT_Button_Inputs) # Bind the button
 
 		mainGrid.add_widget(self.Adults_RT_minus) # Add the button to the grid
@@ -70,12 +74,12 @@ class MyGrid(GridLayout):
 		mainGrid.add_widget(self.Adults_RT_add)
 
 	def Create_Adults_OW_Grid(self, mainGrid):
-		mainGrid.add_widget(Label(text="Adults One Way: ")) # Add a text label
+		mainGrid.add_widget(Label(text="Adults OW: ", font_size=fontSize_Labels)) # Add a text label
 
-		self.Adults_OW_input = TextInput(text = "0", multiline = False, font_size=40) # Create a text input box
-		self.Adults_OW_minus = Button(text="-", font_size=40) # Create a button
+		self.Adults_OW_input = TextInput(text = "0", multiline = False, font_size=fontSize_Buttons) # Create a text input box
+		self.Adults_OW_minus = Button(text="-", font_size=fontSize_Buttons) # Create a button
 		self.Adults_OW_minus.bind(on_press=self.Adults_OW_Button_Inputs) # Bind the button
-		self.Adults_OW_add = Button(text="+", font_size=40) # Create a button
+		self.Adults_OW_add = Button(text="+", font_size=fontSize_Buttons) # Create a button
 		self.Adults_OW_add.bind(on_press=self.Adults_OW_Button_Inputs) # Bind the button
 
 		mainGrid.add_widget(self.Adults_OW_minus) # Add the button to the grid
@@ -83,12 +87,12 @@ class MyGrid(GridLayout):
 		mainGrid.add_widget(self.Adults_OW_add)
 
 	def Create_CS_RT_Grid(self, mainGrid):
-		mainGrid.add_widget(Label(text="C / S Round Trip: "))
+		mainGrid.add_widget(Label(text="C / S RT: ", font_size=fontSize_Labels))
 
-		self.CS_RT_input = TextInput(text = "0", multiline = False, font_size = 40)
-		self.CS_RT_minus = Button(text="-", font_size=40)
+		self.CS_RT_input = TextInput(text = "0", multiline = False, font_size = fontSize_Buttons)
+		self.CS_RT_minus = Button(text="-", font_size=fontSize_Buttons)
 		self.CS_RT_minus.bind(on_press=self.CS_RT_Inputs)
-		self.CS_RT_add = Button(text="+", font_size=40)
+		self.CS_RT_add = Button(text="+", font_size=fontSize_Buttons)
 		self.CS_RT_add.bind(on_press=self.CS_RT_Inputs)
 
 		mainGrid.add_widget(self.CS_RT_minus)
@@ -96,12 +100,12 @@ class MyGrid(GridLayout):
 		mainGrid.add_widget(self.CS_RT_add)
 
 	def Create_CS_OW_Grid(self, mainGrid):
-		mainGrid.add_widget(Label(text="C / S One Way: "))
+		mainGrid.add_widget(Label(text="C / S OW: ", font_size=fontSize_Labels))
 
-		self.CS_OW_input = TextInput(text = "0", multiline = False, font_size = 40)
-		self.CS_OW_minus = Button(text="-", font_size=40)
+		self.CS_OW_input = TextInput(text = "0", multiline = False, font_size = fontSize_Buttons)
+		self.CS_OW_minus = Button(text="-", font_size=fontSize_Buttons)
 		self.CS_OW_minus.bind(on_press=self.CS_OW_Inputs)
-		self.CS_OW_add = Button(text="+", font_size=40)
+		self.CS_OW_add = Button(text="+", font_size=fontSize_Buttons)
 		self.CS_OW_add.bind(on_press=self.CS_OW_Inputs)
 
 		mainGrid.add_widget(self.CS_OW_minus)
@@ -133,10 +137,8 @@ class MyGrid(GridLayout):
 		super(MyGrid, self).__init__(**kwargs)
 
 		self.cols = 1 # Set the number of columns.
-		self.rows = 5
 
-		self.ticketCounter = GridLayout()
-		self.ticketCounter.cols = 4
+		self.ticketCounter = GridLayout(cols=4)
 
 		""" Top Bar """
 		self.ticketCounter.add_widget(Label(text="From: ", height=44))
@@ -222,7 +224,8 @@ class MyGrid(GridLayout):
 
 	def Null_Route_Popup(self):
 		if(All_Routes.getRouteThatStartsAndEndsWith(self.current_start, self.current_end).start == "NULL"):
-			popup = Popup(title="Route does not exist.", size_hint=(None, None), size=(100, 100))
+			popup = Popup(title="Route does not exist.", content=Label(text="Please double-check the START and END locations.", font_size=fontSize_Labels), size_hint_y=None, size=(100, 100))
+			popup.auto_dismiss = True
 			popup.open()
 
 	def Start_DropDown_Menu_Inputs(self, instance):
