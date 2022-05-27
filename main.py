@@ -20,10 +20,10 @@ for x in range(0, 3):
 
 for x in range(0, 3):
 	End_Route_Names.append("x")
-print(Start_Route_Names)
 
-fontSize_Labels = 14
-fontSize_Buttons = 35
+fontSize_Labels = 20
+fontSize_Buttons = 40
+fontSize_Buttons_2 = 60
 
 def keep_above_zero(number):
 	""" Returns 0 if the number is below 0. Otherwise, returns the number. """
@@ -48,9 +48,9 @@ class MyGrid(GridLayout):
 	def Create_DropDown_Menu(self, main_button_text, data, handler):
 		""" Creates the FROM dropdown menu using the given array."""
 		dropDown = DropDown()
-		fontSize = 15
+		fontSize = fontSize_Buttons
 		for item in data:
-			button = Button(text=item, size_hint_y=None, font_size = fontSize, height = 45)
+			button = Button(text=item, size_hint_y=None, font_size = fontSize, height = 80)
 			button.bind(on_release=lambda button: dropDown.select(button.text))
 			button.bind(on_release=handler)
 			dropDown.add_widget(button)
@@ -62,11 +62,11 @@ class MyGrid(GridLayout):
 	def Create_Adults_RT_Grid(self, mainGrid):
 		mainGrid.add_widget(Label(text="Adults RT: ", font_size=fontSize_Labels)) # Add a text label
 
-		self.Adults_RT_input = TextInput(text = "0", multiline = False, font_size=fontSize_Buttons) # Create a text input box
+		self.Adults_RT_input = TextInput(text = "0", multiline = False, font_size=fontSize_Buttons_2) # Create a text input box
 		self.Adults_RT_input.bind(on_text_validate=self.Adults_RT_Button_Inputs)
-		self.Adults_RT_minus = Button(text="-", font_size=fontSize_Buttons) # Create a button
+		self.Adults_RT_minus = Button(text="-", font_size=fontSize_Buttons_2) # Create a button
 		self.Adults_RT_minus.bind(on_press=self.Adults_RT_Button_Inputs) # Bind the button
-		self.Adults_RT_add = Button(text="+", font_size=fontSize_Buttons) # Create a button
+		self.Adults_RT_add = Button(text="+", font_size=fontSize_Buttons_2) # Create a button
 		self.Adults_RT_add.bind(on_press=self.Adults_RT_Button_Inputs) # Bind the button
 
 		mainGrid.add_widget(self.Adults_RT_minus) # Add the button to the grid
@@ -76,10 +76,10 @@ class MyGrid(GridLayout):
 	def Create_Adults_OW_Grid(self, mainGrid):
 		mainGrid.add_widget(Label(text="Adults OW: ", font_size=fontSize_Labels)) # Add a text label
 
-		self.Adults_OW_input = TextInput(text = "0", multiline = False, font_size=fontSize_Buttons) # Create a text input box
-		self.Adults_OW_minus = Button(text="-", font_size=fontSize_Buttons) # Create a button
+		self.Adults_OW_input = TextInput(text = "0", multiline = False, font_size=fontSize_Buttons_2) # Create a text input box
+		self.Adults_OW_minus = Button(text="-", font_size=fontSize_Buttons_2) # Create a button
 		self.Adults_OW_minus.bind(on_press=self.Adults_OW_Button_Inputs) # Bind the button
-		self.Adults_OW_add = Button(text="+", font_size=fontSize_Buttons) # Create a button
+		self.Adults_OW_add = Button(text="+", font_size=fontSize_Buttons_2) # Create a button
 		self.Adults_OW_add.bind(on_press=self.Adults_OW_Button_Inputs) # Bind the button
 
 		mainGrid.add_widget(self.Adults_OW_minus) # Add the button to the grid
@@ -89,10 +89,10 @@ class MyGrid(GridLayout):
 	def Create_CS_RT_Grid(self, mainGrid):
 		mainGrid.add_widget(Label(text="C / S RT: ", font_size=fontSize_Labels))
 
-		self.CS_RT_input = TextInput(text = "0", multiline = False, font_size = fontSize_Buttons)
-		self.CS_RT_minus = Button(text="-", font_size=fontSize_Buttons)
+		self.CS_RT_input = TextInput(text = "0", multiline = False, font_size = fontSize_Buttons_2)
+		self.CS_RT_minus = Button(text="-", font_size=fontSize_Buttons_2)
 		self.CS_RT_minus.bind(on_press=self.CS_RT_Inputs)
-		self.CS_RT_add = Button(text="+", font_size=fontSize_Buttons)
+		self.CS_RT_add = Button(text="+", font_size=fontSize_Buttons_2)
 		self.CS_RT_add.bind(on_press=self.CS_RT_Inputs)
 
 		mainGrid.add_widget(self.CS_RT_minus)
@@ -102,10 +102,10 @@ class MyGrid(GridLayout):
 	def Create_CS_OW_Grid(self, mainGrid):
 		mainGrid.add_widget(Label(text="C / S OW: ", font_size=fontSize_Labels))
 
-		self.CS_OW_input = TextInput(text = "0", multiline = False, font_size = fontSize_Buttons)
-		self.CS_OW_minus = Button(text="-", font_size=fontSize_Buttons)
+		self.CS_OW_input = TextInput(text = "0", multiline = False, font_size = fontSize_Buttons_2)
+		self.CS_OW_minus = Button(text="-", font_size=fontSize_Buttons_2)
 		self.CS_OW_minus.bind(on_press=self.CS_OW_Inputs)
-		self.CS_OW_add = Button(text="+", font_size=fontSize_Buttons)
+		self.CS_OW_add = Button(text="+", font_size=fontSize_Buttons_2)
 		self.CS_OW_add.bind(on_press=self.CS_OW_Inputs)
 
 		mainGrid.add_widget(self.CS_OW_minus)
@@ -114,13 +114,13 @@ class MyGrid(GridLayout):
 
 	def Create_Results_Grid(self, mainGrid):
 
-		mainGrid.add_widget(Label(text="Total: "))
+		mainGrid.add_widget(Label(text="Total: ", font_size=fontSize_Labels))
 
 		self.totalPrice = Label(text="$0.00", font_size=45)
 
 		mainGrid.add_widget(self.totalPrice)
 		
-		mainGrid.add_widget(Label(text="Tickets: "))
+		mainGrid.add_widget(Label(text="Tickets: ", font_size=fontSize_Labels))
 
 		self.totalTickets = Label(text="0", font_size=45)
 
@@ -128,7 +128,7 @@ class MyGrid(GridLayout):
 
 	def Create_Reset_Button(self, mainGrid):
 		reset_button_text = "Reset"
-		self.Reset_Button = Button(text=reset_button_text)
+		self.Reset_Button = Button(text=reset_button_text, font_size=fontSize_Buttons)
 		self.Reset_Button.bind(on_press=self.Reset_Button_Input)
 		mainGrid.add_widget(self.Reset_Button)
 
@@ -141,18 +141,18 @@ class MyGrid(GridLayout):
 		self.ticketCounter = GridLayout(cols=4)
 
 		""" Top Bar """
-		self.ticketCounter.add_widget(Label(text="From: ", height=44))
+		self.ticketCounter.add_widget(Label(text="From: ", height=44, font_size=fontSize_Labels))
 		self.From_Menu = self.Create_DropDown_Menu("Start", Start_Route_Names, self.Start_DropDown_Menu_Inputs)
 		self.ticketCounter.add_widget(self.From_Menu)
-		self.ticketCounter.add_widget(Label(text="To: ", height=44))
+		self.ticketCounter.add_widget(Label(text="To: ", height=44, font_size=fontSize_Labels))
 		self.To_Menu = self.Create_DropDown_Menu("End", End_Route_Names, self.End_DropDown_Menu_Inputs)
 		self.ticketCounter.add_widget(self.To_Menu)
 
 		""" Calculator parts """
 		self.Create_Adults_OW_Grid(self.ticketCounter)
 		self.Create_Adults_RT_Grid(self.ticketCounter)
-		self.Create_CS_RT_Grid(self.ticketCounter)
 		self.Create_CS_OW_Grid(self.ticketCounter)
+		self.Create_CS_RT_Grid(self.ticketCounter)
 		self.Create_Results_Grid(self.ticketCounter)
 
 		""" Reset Button """
