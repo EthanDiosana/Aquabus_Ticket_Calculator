@@ -169,7 +169,6 @@ class MyGrid(GridLayout):
 
 			return newGrid
 
-
 	def __init__(self, **kwargs):
 		super(MyGrid, self).__init__(**kwargs)
 
