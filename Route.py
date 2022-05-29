@@ -48,18 +48,13 @@ class Route():
 		""" Returns a float calculated from the number of tickets and their prices. """
 		final_price = float(0.00)
 
-		# WHy did I do loops???? I could just multiply????
-		for x in range(0, number_adults_OW):
-			final_price += float(self.adults_OW)
+		final_price += float(self.adults_OW) * number_adults_OW
 
-		for x in range(0, number_adults_RT):
-			final_price += float(self.adults_RT)
-
-		for x in range(0, number_CS_OW):
-			final_price += float(self.CS_OW)
-
-		for x in range(0, number_CS_RT):
-			final_price += float(self.CS_RT)
+		final_price += float(self.adults_RT) * number_adults_RT
+		
+		final_price += float(self.CS_OW) * number_CS_OW
+		
+		final_price += float(self.CS_RT) * number_CS_RT
 
 		return final_price
 
@@ -67,17 +62,14 @@ class Route():
 		""" Returns an int calculated from the number of tickets"""
 		final_tickets = 0
 
-		for x in range(0, number_adults_OW):
-			final_tickets += int(self.adults_tickets)
+		final_tickets += int(self.adults_tickets) * number_adults_OW
 
-		for x in range(0, number_adults_RT):
-			final_tickets += int(self.adults_tickets) * 2
+		final_tickets += int(self.adults_tickets) * 2 * number_adults_RT
 
-		for x in range(0, number_CS_OW):
-			final_tickets += int(self.CS_tickets)
+		final_tickets += int(self.CS_tickets) * number_CS_OW
+		
+		final_tickets += int(self.CS_tickets) * 2 * number_CS_RT
 
-		for x in range(0, number_CS_RT):
-			final_tickets += int(self.CS_tickets) * 2
 		return final_tickets
 
 	def toString(self):

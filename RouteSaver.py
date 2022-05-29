@@ -1,8 +1,4 @@
 
-
-from turtle import update
-from Route import Route
-
 def main(fileName):
     """ Gathers console input and saves a parsable Route string to a .txt file. """
 

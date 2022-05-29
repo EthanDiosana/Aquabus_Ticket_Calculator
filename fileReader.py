@@ -15,5 +15,3 @@ for line in file.readlines(): # Read the file line by line.
 	if line != "\n": # Only read the line if isn't just a linebreak.
 		parsed_line = line.rstrip()
 		All_Routes.addRoute(Route(parsed_line))
-
-All_Routes.printAllRoutes()
