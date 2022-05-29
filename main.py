@@ -301,9 +301,8 @@ class MyGrid(GridLayout):
 		for ticket in Tickets:
 			Tickets[ticket] = 0
 
-		for x in range(len(Tickets)+1, 0, -1):
+		for x in range(len(Tickets)+1, 1, -1):
 			print(self.children[0].children[1].children[x].children[1].text)
-			print("AAAAAAAAAAAAAAAAAAAAAAA")
 			self.children[0].children[1].children[x].children[1].text = str(0)
 		self.update_stats()
 
