@@ -9,6 +9,13 @@ class Route_Container():
 		""" Adds a Route to the Routes dictionary. """
 		self.Routes[routeToAdd.name] = routeToAdd
 
+	def routeIsInContainer(self, start, end):
+		"""Returns True if the given route is in Routes{}. Returns False otherwise."""
+		if(self.getRouteThatStartsAndEndsWith(start, end).start == "NULL"):
+			return False
+		else:
+			return True
+
 	def getAllRoutesStartingAt(self, startLocation: str):
 		""" Returns a dictionary of all Routes starting at the given startLocation. """
 		outputDictionary = {}

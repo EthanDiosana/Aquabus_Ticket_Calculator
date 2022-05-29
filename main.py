@@ -90,7 +90,7 @@ class MyGrid(GridLayout):
 		label = Label(text=label_text, font_size=label_font_size, size_hint=(2, 0))
 		minus_button = Button(text="-", font_size=button_font_size)
 		plus_button = Button(text="+", font_size=button_font_size)
-		text_input = TextInput(text="0", multiline=False, font_size=text_input_font_size, input_type="number")
+		text_input = TextInput(text="0", multiline=False, font_size=text_input_font_size, input_filter='int')
 
 		# Bind the buttons to the input handler.
 		minus_button.bind(on_press=input_handler)
@@ -253,7 +253,8 @@ class MyGrid(GridLayout):
 			return number
 
 	def notify_null_route(self):
-		if(All_Routes.getRouteThatStartsAndEndsWith(self.current_start, self.current_end).start == "NULL"):
+		"""Places a notification in the notification zone if the route does not exist."""
+		if(not All_Routes.routeIsInContainer(self.current_start, self.current_end)):
 			self.notification_zone.text = "Route does not exist."
 			self.notification_zone.color = "red"
 			for x in range(len(Tickets)+1, 1, -1):
@@ -317,7 +318,7 @@ class MyGrid(GridLayout):
 
 class MyApp(App):
 	def build(self):
-		self.icon = "Logo.png"
+		self.icon = "Images/Logo.png"
 		return MyGrid()
 
 
