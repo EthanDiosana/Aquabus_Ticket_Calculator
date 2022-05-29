@@ -221,9 +221,13 @@ class MyGrid(GridLayout):
 		elif(instance==minus_button):
 			dictionary[label.text] -= 1
 		elif(instance==text_input):
-			if(dictionary.text.isnumeric()):
+			if(instance.text.isnumeric()):
 				print(instance.text + " is numeric.")
-				dictionary[label.text] = int(instance.text)
+				if(int(instance.text)<=999999 and int(instance.text)>=0):
+					dictionary[label.text] = int(instance.text)
+				else:
+					instance.text = str(0)
+				
 			else:
 				print(instance.text + " is not numeric.")
 				instance.text = str(0)
