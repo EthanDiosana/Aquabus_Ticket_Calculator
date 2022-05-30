@@ -5,6 +5,8 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 
+import json
+
 """Import Routes"""
 from fileReader import All_Routes
 
@@ -14,6 +16,7 @@ from settings import *
 """Import dictionaries"""
 from dictionaries import *
 
+"""Get start and end locations."""
 Start_Route_Names = All_Routes.getStartLocations()
 End_Route_Names = All_Routes.getEndLocations()
 
@@ -90,7 +93,7 @@ class MyGrid(GridLayout):
 		label = Label(text=label_text, font_size=label_font_size, size_hint=(2, 0))
 		minus_button = Button(text="-", font_size=button_font_size)
 		plus_button = Button(text="+", font_size=button_font_size)
-		text_input = TextInput(text="0", multiline=False, font_size=text_input_font_size, input_filter='int')
+		text_input = TextInput(text="0", multiline=False, font_size=text_input_font_size, input_filter='int', input_type="number")
 
 		# Bind the buttons to the input handler.
 		minus_button.bind(on_press=input_handler)
@@ -149,9 +152,11 @@ class MyGrid(GridLayout):
 			Start_End_Grid = self.Create_Start_End_Grid( fontSize_Dropdown, Start_Route_Names, End_Route_Names, self.Start_DropDown_Menu_Inputs, self.End_DropDown_Menu_Inputs)
 			Results_Grid = self.Create_Results_Grid()
 
-			Reset_Button = self.Create_Button("Reset", fontSize_Buttons, self.Reset_Button_Input)
+			# Create the Reset button and set it to disabled.
+			self.Reset_Button = self.Create_Button("Reset", fontSize_Buttons, self.Reset_Button_Input)
+			self.Reset_Button.disabled = True
 
-			self.notification_zone = Label(size_hint=(.5,.5), font_size=20, color="red")
+			self.notification_zone = Label(text="Please select a start and end location.", size_hint=(.5,.5), font_size=20, color="yellow")
 
 			newGrid.add_widget(self.notification_zone)
 			newGrid.add_widget(Start_End_Grid)
@@ -165,7 +170,7 @@ class MyGrid(GridLayout):
 				newGrid.add_widget(new_grid)
 
 			newGrid.add_widget(Results_Grid)
-			newGrid.add_widget(Reset_Button)
+			newGrid.add_widget(self.Reset_Button)
 
 			return newGrid
 
@@ -216,20 +221,16 @@ class MyGrid(GridLayout):
 		tag = label.text
 		# Check which button was pressed.
 		if(instance==plus_button):
+			dictionary[tag] = int(text_input.text)
 			dictionary[tag] += 1
 		elif(instance==minus_button):
+			dictionary[tag] = int(text_input.text)
 			dictionary[label.text] -= 1
 		elif(instance==text_input):
-			if(instance.text.isnumeric()):
-				print(instance.text + " is numeric.")
-				if(int(instance.text)<=999999 and int(instance.text)>=0):
-					dictionary[label.text] = int(instance.text)
+				if(int(instance.text)<=99999 and int(instance.text)>=0):
+					dictionary[tag] = int(text_input.text)
 				else:
 					instance.text = str(0)
-				
-			else:
-				print(instance.text + " is not numeric.")
-				instance.text = str(0)
 
 		# Prevent the number of tickets from going below zero.
 		dictionary[tag] = self.prevent_below_zero(dictionary[tag])
@@ -254,6 +255,7 @@ class MyGrid(GridLayout):
 	def notify_null_route(self):
 		"""Places a notification in the notification zone if the route does not exist."""
 		if(not All_Routes.routeIsInContainer(self.current_start, self.current_end)):
+			self.Reset_Button.disabled = True
 			self.notification_zone.text = "Route does not exist."
 			self.notification_zone.color = "red"
 			for x in range(len(Tickets)+1, 1, -1):
@@ -262,6 +264,7 @@ class MyGrid(GridLayout):
 				self.children[0].children[1].children[x].children[2].disabled = True
 
 		else:
+			self.Reset_Button.disabled = False
 			self.notification_zone.text = self.current_start + " to " + self.current_end
 			self.notification_zone.color = "green"
 			for x in range(len(Tickets)+1, 1, -1):

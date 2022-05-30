@@ -17,4 +17,5 @@ calculator_grid_size_hint = (1, 7)
 passes_grid_size_hint = (1, 7)
 
 # The small text at the bottom of the screen.
-bottom_text = "Aquabus Ticket Calculator v2.1 | danielrenendez@gmail.com"
+bottom_text = "Aquabus Ticket Calculator v2.3 | danielrenendez@gmail.com"
+
