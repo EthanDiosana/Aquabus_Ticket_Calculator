@@ -7,13 +7,13 @@ class Route():
 		self.end = parsedString[1]
 		self.name = self.start + " to " + self.end
 
-		self.adults_OW = parsedString[2]
-		self.adults_RT = parsedString[3]
-		self.adults_tickets = parsedString[4]
+		self.adults_OW = float(parsedString[2])
+		self.adults_RT = float(parsedString[3])
+		self.adults_tickets = int(parsedString[4])
 
-		self.CS_OW = parsedString[5]
-		self.CS_RT = parsedString[6]
-		self.CS_tickets = parsedString[7]
+		self.CS_OW = float(parsedString[5])
+		self.CS_RT = float(parsedString[6])
+		self.CS_tickets = int(parsedString[7])
 
 	def returnAsDictionary(self):
 		""" Returns the Route and its values as a dictionary. """

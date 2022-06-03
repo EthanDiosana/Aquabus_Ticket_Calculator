@@ -1,16 +1,4 @@
-Passes = {
-		"Adults DP": 0,
-		"Adults MP": 0,
-		"CS DP" : 0,
-		"CS MP" : 0
-	}
-
-Passes_Costs = {
-		"Adults DP": 0.00,
-		"Adults MP": 0.00,
-		"CS DP" : 0.00,
-		"CS MP" : 0.00
-	}
+Passes = {}
 
 Tickets = {
 		"Adults OW" : 0,

@@ -4,11 +4,11 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
-
-import json
+from kivy.animation import Animation
 
 """Import Routes"""
 from fileReader import All_Routes
+from fileReader import All_Passes
 
 """Import settings."""
 from settings import *
@@ -98,7 +98,7 @@ class MyGrid(GridLayout):
 		# Bind the buttons to the input handler.
 		minus_button.bind(on_press=input_handler)
 		plus_button.bind(on_press=input_handler)
-		text_input.bind(on_text_validate=input_handler)
+		text_input.bind(on_focus=input_handler)
 
 		# Add all of the widgets to the grid.
 		ticketGrid.add_widget(label)
@@ -131,17 +131,22 @@ class MyGrid(GridLayout):
 		newButton.bind(on_press=handler)
 		return newButton
 
+	def Create_Total_Grid(self, text_size):
+		newGrid = GridLayout(rows = 1, cols = 2)
+		newGrid.add_widget(Label(text="Total: ", font_size = text_size))
+		newGrid.add_widget(Label(text="", font_size = text_size))
+		return newGrid
+
 	def Create_Passes_Grid(self):
-		newGrid = GridLayout(cols=1)
+		newGrid = GridLayout(cols = 1)
 		newGrid.size_hint = passes_grid_size_hint
 
 		self.notification_zone_2 = Label(size_hint=(.5,.5), font_size=20, color="red", text="Coming soon!")
 
 		newGrid.add_widget(self.notification_zone_2)
 
-		for ticket_name in Passes.keys():
-			new_grid = self.Create_Ticket_Grid(ticket_name, fontSize_Labels, fontSize_Buttons, fontSize_Buttons, self.change_ticket_number)
-			newGrid.add_widget(new_grid)
+		newGrid.add_widget(self.Create_Total_Grid(fontSize_Labels))
+		newGrid.add_widget(self.Create_Button("Reset", fontSize_Buttons, self.Reset_Button_Input))
 
 		return newGrid
 
@@ -286,13 +291,15 @@ class MyGrid(GridLayout):
 		self.update_stats()
 
 	def Reset_Button_Input(self, instance):
-		for ticket in Tickets:
-			Tickets[ticket] = 0
 
-		for x in range(len(Tickets)+1, 1, -1):
-			#print(self.children[0].children[1].children[x].children[1].text)
-			self.children[0].children[1].children[x].children[1].text = str(0)
-		self.update_stats()
+		if(self.current_tab=="Tickets"):
+			for ticket in Tickets:
+				Tickets[ticket] = 0
+
+			for x in range(len(Tickets)+1, 1, -1):
+				#print(self.children[0].children[1].children[x].children[1].text)
+				self.children[0].children[1].children[x].children[1].text = str(0)
+			self.update_stats()
 
 	def Tabs_Handler(self, instance):
 		if(instance.text=="Tickets"):
@@ -300,23 +307,28 @@ class MyGrid(GridLayout):
 			instance.parent.children[0].disabled = False
 			self.current_tab="Tickets"
 			self.hide_grid(self.Passes_Grid)
-			self.show_grid(self.Calculator_Grid)
+			self.show_grid(self.Calculator_Grid, True)
 		elif(instance.text=="Passes"):
 			instance.disabled = True
 			instance.parent.children[1].disabled = False
 			self.current_tab="Passes"
 			self.hide_grid(self.Calculator_Grid)
-			self.show_grid(self.Passes_Grid)
+			self.show_grid(self.Passes_Grid, False)
 
 	def hide_grid(self, grid):
 		grid.size_hint=(0,0)
 		grid.opacity = 0
 		grid.disabled = True
 
-	def show_grid(self, grid):
+	def show_grid(self, grid, in_left):
 		grid.opacity = 1
 		grid.disabled = False
 		grid.size_hint=(1,7)
+		if(in_left):
+			anim= Animation(x=-1000, duration=0) + Animation(x=0,y=0,duration=0.1, t='in_out_back')
+		else:
+			anim= Animation(x=+1000, duration=0) + Animation(x=0,y=0,duration=0.1, t='in_out_back')
+		anim.start(grid)
 
 class MyApp(App):
 	def build(self):
