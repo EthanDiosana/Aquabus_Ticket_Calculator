@@ -1,14 +1,17 @@
-# The size for the labels.
+# The font size for the labels.
 fontSize_Labels = 40
 
-# The size for the buttons on the dropdown menu.
-fontSize_Buttons = 40
+# The font size for the input buttons.
+fontSize_Buttons = 50
 
-# The size for the input buttons.
-fontSize_Dropdown = 30
+# The font size for the buttons on the dropdown menu.
+fontSize_Dropdown = 45
 
-# The size for the top tabs.
-fontSize_Tabs = 20
+# The font size for the top tabs.
+fontSize_Tabs = 35
+
+# The font size for the notification zones.
+fontSize_Notifications = 30
 
 # The aspect ratio of the ticket grid.
 calculator_grid_size_hint = (1, 7)
@@ -17,5 +20,5 @@ calculator_grid_size_hint = (1, 7)
 passes_grid_size_hint = (1, 7)
 
 # The small text at the bottom of the screen.
-bottom_text = "Aquabus Ticket Calculator v2.4 | danielrenendez@gmail.com"
+bottom_text = "Aquabus Ticket Calculator v2.6 | ethandiosana1@gmail.com"
 

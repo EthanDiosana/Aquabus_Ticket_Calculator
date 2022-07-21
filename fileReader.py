@@ -27,7 +27,7 @@ with open(passes_file, "r") as file_object:
 	for line in file_object:
 		if line != "\n":
 			parsed_line = line.rstrip().split("|")
-			new_pass = Pass(parsed_line[0], parsed_line[1], parsed_line[2])
+			new_pass = Pass(parsed_line[0] + " " + parsed_line[1], parsed_line[1], parsed_line[2])
 			All_Passes.addPass(new_pass)
 
 

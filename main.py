@@ -1,3 +1,4 @@
+
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
@@ -5,6 +6,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.button import Button
 from kivy.uix.dropdown import DropDown
 from kivy.animation import Animation
+from kivy.uix.boxlayout import BoxLayout
 
 """Import Routes"""
 from fileReader import All_Routes
@@ -34,7 +36,7 @@ class MyGrid(GridLayout):
 	current_tab = "Tickets"
 
 	def Create_Switch_Tabs(self, tab_1_text, tab_2_text, tab_font_size, handler):
-		newGrid = GridLayout(rows=1, cols=2)
+		newGrid = BoxLayout(orientation="horizontal")
 		newGrid.size_hint = (1, 0.5)
 
 		tab_1 = Button(text=tab_1_text, font_size=tab_font_size)
@@ -71,7 +73,7 @@ class MyGrid(GridLayout):
 		"""Creates a grid for selecting the TO and FROM of the route."""
 
 		# Create the grid to be returned.
-		newGrid = GridLayout(rows=1, cols=4)
+		newGrid = BoxLayout(orientation="horizontal")
 
 		# Create all of the labels and buttons.
 		start_menu = self.Create_DropDown_Menu("Start", dropdown_font_size, start_data, start_handler)
@@ -87,18 +89,18 @@ class MyGrid(GridLayout):
 		"""Creates a grid for adding and removing tickets."""
 
 		# Create the grid to be returned.
-		ticketGrid = GridLayout(rows=1, cols=4)
+		ticketGrid = BoxLayout(orientation="horizontal")
 	
 		# Create the label, buttons, and text input box.
 		label = Label(text=label_text, font_size=label_font_size, size_hint=(2, 0))
 		minus_button = Button(text="-", font_size=button_font_size)
 		plus_button = Button(text="+", font_size=button_font_size)
-		text_input = TextInput(text="0", multiline=False, font_size=text_input_font_size, input_filter='int', input_type="number")
+		text_input = TextInput(text="0", multiline=False, font_size=text_input_font_size, input_filter='int')
 
 		# Bind the buttons to the input handler.
 		minus_button.bind(on_press=input_handler)
 		plus_button.bind(on_press=input_handler)
-		text_input.bind(on_focus=input_handler)
+		text_input.bind(on_text_validate=input_handler)
 
 		# Add all of the widgets to the grid.
 		ticketGrid.add_widget(label)
@@ -132,21 +134,23 @@ class MyGrid(GridLayout):
 		return newButton
 
 	def Create_Total_Grid(self, text_size):
-		newGrid = GridLayout(rows = 1, cols = 2)
+		newGrid = BoxLayout(orientation="horizontal")
 		newGrid.add_widget(Label(text="Total: ", font_size = text_size))
 		newGrid.add_widget(Label(text="", font_size = text_size))
 		return newGrid
 
 	def Create_Passes_Grid(self):
-		newGrid = GridLayout(cols = 1)
+		newGrid = GridLayout(cols=1)
 		newGrid.size_hint = passes_grid_size_hint
 
-		self.notification_zone_2 = Label(size_hint=(.5,.5), font_size=20, color="red", text="Coming soon!")
+		self.notification_zone_2 = Label(size_hint=(.5,.5), font_size=fontSize_Notifications, color="red", text="Coming soon!")
 
 		newGrid.add_widget(self.notification_zone_2)
 
 		newGrid.add_widget(self.Create_Total_Grid(fontSize_Labels))
-		newGrid.add_widget(self.Create_Button("Reset", fontSize_Buttons, self.Reset_Button_Input))
+		resetButton = self.Create_Button("Reset", fontSize_Buttons, self.Reset_Button_Input)
+		resetButton.disabled=True
+		newGrid.add_widget(resetButton)
 
 		return newGrid
 
@@ -161,7 +165,7 @@ class MyGrid(GridLayout):
 			self.Reset_Button = self.Create_Button("Reset", fontSize_Buttons, self.Reset_Button_Input)
 			self.Reset_Button.disabled = True
 
-			self.notification_zone = Label(text="Please select a start and end location.", size_hint=(.5,.5), font_size=20, color="yellow")
+			self.notification_zone = Label(text="Please select a start and end location.", size_hint=(.5,.5), font_size=fontSize_Notifications, color="yellow")
 
 			newGrid.add_widget(self.notification_zone)
 			newGrid.add_widget(Start_End_Grid)
@@ -324,11 +328,11 @@ class MyGrid(GridLayout):
 		grid.opacity = 1
 		grid.disabled = False
 		grid.size_hint=(1,7)
-		if(in_left):
-			anim= Animation(x=-1000, duration=0) + Animation(x=0,y=0,duration=0.1, t='in_out_back')
+		"""if(in_left):
+			anim= Animation(x=-1000, y=0, duration=0) + Animation(x=0,y=0,duration=0.15)
 		else:
-			anim= Animation(x=+1000, duration=0) + Animation(x=0,y=0,duration=0.1, t='in_out_back')
-		anim.start(grid)
+			anim= Animation(x=+1000, y=0, duration=0) + Animation(x=0,y=0,duration=0.15)
+		anim.start(grid)"""
 
 class MyApp(App):
 	def build(self):
